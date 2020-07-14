@@ -1,0 +1,1 @@
+go over the pseudo code, understand what needs to be done and start writing code
