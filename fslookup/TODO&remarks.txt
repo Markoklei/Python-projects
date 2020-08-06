@@ -1,1 +1,6 @@
-go over the pseudo code, understand what needs to be done and start writing code
+go over the code we wrote, first logically then look for compliance with the pseudo-code
+-----
+to push to the Python_projects repository:
+git add <files or simply .>
+git commit -m "informative message"
+git push origin master
