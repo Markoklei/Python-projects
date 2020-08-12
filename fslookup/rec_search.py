@@ -1,10 +1,27 @@
 from os import walk
-from os.path import isfile, isdir, join
+from os.path import isfile, isdir, join, splitext
+
+
+SUPPORTED_EXTENSIONS = ['.txt']
+
+
+"""function assumes <path> points to a .txt file and searches it for <sterm>.
+Returns True if file contains <sterm>, false otherwise."""
+def open_search_txt(path, sterm):
+    pass
+
+
+SEARCH_FUNCTIONS = [open_search_txt]
 
 
 """function assumes path is pointing to a file, checks file's extension and tries to open it if extension is supported.
-Returns True if file contains sterm, false otherwise. If file extension is not supported, return False."""
+Returns True if file contains <sterm>, false otherwise. If file extension is not supported, return False."""
 def contains (path, sterm):
+    fname, fextension = splitext(path)
+    for i, ext in enumerate(SUPPORTED_EXTENSIONS):
+        if ext == fextension:
+            SEARCH_FUNCTIONS[i](path, sterm)
+
 
 
 

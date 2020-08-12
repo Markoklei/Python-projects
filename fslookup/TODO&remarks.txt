@@ -1,4 +1,4 @@
-go over the code we wrote, first logically then look for compliance with the pseudo-code
+add supported extensions and their appropriate functions - don't forget to update lists
 -----
 to push to the Python_projects repository:
 git add <files or simply .>
