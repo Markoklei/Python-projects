@@ -20,7 +20,7 @@ def contains (path, sterm):
     fname, fextension = splitext(path)
     for i, ext in enumerate(SUPPORTED_EXTENSIONS):
         if ext == fextension:
-            SEARCH_FUNCTIONS[i](path, sterm)
+            return SEARCH_FUNCTIONS[i](path, sterm)
 
 
 
