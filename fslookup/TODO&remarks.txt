@@ -1,6 +1,18 @@
-add supported extensions and their appropriate functions - don't forget to update lists
+add supported extensions and their appropriate functions - right now we have .docx and .txt, which is fine for now, we
+might add pdf later on - don't forget to update lists (supported_extensions and search_functions)
+
+initial smoke testing for .txt extension went ok, use the 'Testing fslookup' folder in desktop for further testing:
+try adding a folder in 'Testing fslookup' and see if the code can find appropriate files in it (so far the testing
+folder is of depth 1, try adding subfolders and see what happens)
+
+read about mmap, bytearray and StringIO object (tabs are open for the former two)
 -----
 to push to the Python_projects repository:
 git add <files or simply .>
 git commit -m "informative message"
 git push origin master
+
+
+something to consider when deploying the app to other computers later on - will the python docx
+module be included or will we get a runtime error? in c the module is only included if we are the ones that wrote it
+if I remember correctly
