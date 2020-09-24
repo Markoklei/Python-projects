@@ -1,11 +1,12 @@
 add supported extensions and their appropriate functions - right now we have .docx and .txt, which is fine for now, we
 might add pdf later on - don't forget to update lists (supported_extensions and search_functions)
 
-initial smoke testing for .txt extension went ok, use the 'Testing fslookup' folder in desktop for further testing:
-try adding a folder in 'Testing fslookup' and see if the code can find appropriate files in it (so far the testing
-folder is of depth 1, try adding subfolders and see what happens)
+finished testing functionality for .txt and .docx - start creating basic GUI with sterm and path input and incorporate
+it with rec_search, when this is done, we will add further functionality like selecting the wanted extensions, treating
+casing (upper/lower), presenting the found files in a list in the GUI (I want the user to be able to open them and
+to open their file location from the GUI), searching for sterm as a whole word rather than substring
 
-read about mmap, bytearray and StringIO object (tabs are open for the former two)
+read about StringIO object and how to GUI in python
 -----
 to push to the Python_projects repository:
 git add <files or simply .>
