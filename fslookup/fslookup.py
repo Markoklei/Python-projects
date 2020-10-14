@@ -2,6 +2,12 @@ from tkinter import filedialog  # this is a submodule that isn't loaded automati
 import tkinter as tk
 import os
 
+from rec_search import rec_search
+
+#   TODO:   Move code to functions with informative names
+#   TODO:   Change visual placement of widgets
+#   TODO:   Scan for vulnerabilities
+
 # Create the GUI application main windows
 top = tk.Tk()
 top.title('FSlookup')
@@ -20,26 +26,60 @@ sterm_fld.pack()
 
 
 #   - Add a path selection button
-def browse_dialog():
+chose_file_or_folder = False
+
+def browse_file_dialog():
+    global chose_file_or_folder
     filename = tk.filedialog.askopenfilename(initialdir = '/',
                                              title = 'Select file/folder to begin search...',
                                              filetypes = ( ('Text files - .txt', '*.txt'),
                                                            ('Word files - .docx', '*.docx'),
                                                            ('All files', '*.*') ))
+    if filename:    # check if some file was chosen
+        st = 'Chose the following ' + 'file:\t' + filename
+        browse_label.configure(text = st)
+        chose_file_or_folder = True
 
-    st = 'Chose the following ' + ('folder:\t' if os.path.isdir(filename) else 'file:\t') + filename
-    browse_label.configure(text = st)
+def browse_folder_dialog():
+    global chose_file_or_folder
+    foldername = tk.filedialog.askdirectory()
+    if foldername:  # check if some folder was chosen
+        st = 'Chose the following ' + 'folder:\t' + foldername
+        browse_label.configure(text = st)
+        chose_file_or_folder = True
 
 browse_label = tk.Label(top,
                         text = 'Choose file/folder to begin search...')
-path_fld = tk.Button(top,
-                     text = 'Browse',
-                     command = browse_dialog)
+browse_folder_button = tk.Button(top,
+                     text = 'Browse folders',
+                     command = browse_folder_dialog)
+browse_file_button = tk.Button(top,
+                               text = 'Browse files',
+                               command = browse_file_dialog)
+
 browse_label.pack()
-path_fld.pack()
+browse_folder_button.pack()
+browse_file_button.pack()
 
 #   - Add an execution button
+#   TODO:   why didn't cget work?
+#   TODO:   how to escape backslashes in path? is it even needed?
+#   TODO:   actually call rec_search, see if import worked
+def search():
+    if chose_file_or_folder:
+        found = []
+        path = browse_label.cget("text").split('\t')[1]
+        sterm = sterm_fld.get()#sterm_fld.cget("text")
+        print("The path is %s\nThe sterm is %s" % (path, sterm))
 
+
+
+
+search_button = tk.Button(top,
+                          text = 'SEARCH',
+                          command = search)
+
+search_button.pack()
 
 #   - Code for the previous button
 

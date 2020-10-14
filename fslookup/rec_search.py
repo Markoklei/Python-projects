@@ -54,9 +54,9 @@ def rec_search (curr_path, sterm, found):
         for obj in fs:  # fs now contains the names of files and folders in the current directory
             rec_search(join(curr_path, obj), sterm, found)
 
-
-found = []
-TESTING_PATH = r"C:\Users\Mark\Desktop\Testing fslookup"
-STERM = "testing"
-rec_search(TESTING_PATH, STERM, found)
-print("called rec_search, found is : ", found)
+if __name__ == '__main__':
+    found = []
+    TESTING_PATH = r"C:\Users\Mark\Desktop\Testing fslookup"
+    STERM = "testing"
+    rec_search(TESTING_PATH, STERM, found)
+    print("called rec_search, found is : ", found)
