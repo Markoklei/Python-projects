@@ -62,15 +62,19 @@ browse_folder_button.pack()
 browse_file_button.pack()
 
 #   - Add an execution button
-#   TODO:   why didn't cget work?
-#   TODO:   how to escape backslashes in path? is it even needed?
-#   TODO:   actually call rec_search, see if import worked
 def search():
     if chose_file_or_folder:
         found = []
         path = browse_label.cget("text").split('\t')[1]
-        sterm = sterm_fld.get()#sterm_fld.cget("text")
+        sterm = sterm_fld.get()
         print("The path is %s\nThe sterm is %s" % (path, sterm))
+        path.replace('\\', '\\\\') # escape the backslashes in the path
+                                   # each litreal backslash becomes two literal backslashes
+        rec_search(path, sterm, found)
+        for f in found: # output found files to GUI as labels' contents
+            label = tk.Label(top,
+                             text = f)
+            label.pack()
 
 
 
@@ -80,8 +84,6 @@ search_button = tk.Button(top,
                           command = search)
 
 search_button.pack()
-
-#   - Code for the previous button
 
 # Enter the main event loop to take action against each event triggered by the user
 top.mainloop()
