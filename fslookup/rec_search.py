@@ -1,3 +1,23 @@
+"""
+This module contains the rec_search function, containing the file system searching logic.
+This module also includes rec_search's auxiliary methods. These methods are for internal use.
+
+
+Globals:
+
+    SUPPORTED_EXTENSIONS
+    SEARCH_FUNCTIONS
+
+
+Functions:
+
+    open_search_txt(path, sterm)
+    open_search_docx(path, sterm)
+    contains(path,sterm)
+    rec_search(curr_path, sterm, found)
+"""
+
+
 from os import walk
 from os.path import isfile, isdir, join, splitext
 
@@ -54,6 +74,9 @@ def rec_search (curr_path, sterm, found):
         for obj in fs:  # fs now contains the names of files and folders in the current directory
             rec_search(join(curr_path, obj), sterm, found)
 
+
+
+# Testing the functionality of this module's methods.
 if __name__ == '__main__':
     found = []
     TESTING_PATH = r"C:\Users\Mark\Desktop\Testing fslookup"
