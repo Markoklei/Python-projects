@@ -1,6 +1,0 @@
-*the recursive search functions takes the path of the current file/folder we are looking into, and the search term and
-a list containing all the files we found so far that contain this term
-*if the path points to a file with an extension we permit, then search the file for the search term, if it is found,
-add the current_path extended with the file name to the list
-*if the path points to a folder, open it (or at least try) and go over all the objects in it and call 
-itself on that object
