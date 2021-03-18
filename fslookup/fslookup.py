@@ -6,46 +6,24 @@ Functions:
 
     sterm_fld_pressed
     add_sterm_fld()
+    add_checkbox_btn()
     add_browse_btn()
     add_search_btn()
     add_widgets()
 """
 
 
-#   TODO: When we try and turn this into an executable - how do we make this module the 'main' module?
+"""To turn this code into an executable, I used the pyinstaller utility, with the command 'pyinstaller --onefile
+    fslookup.py'. However, this is slow on startup - you can use just 'pyinstaller fslookup.py', but then you have
+    to execute fslookup.exe from the folder that was created.
+    Either way, when opening fslookup.exe, a cmd windows pops up. A batch file can be created, silently launching
+    fslookup.exe, and a shortcut called fslookup.exe can be used to point to this batch file.
+"""
 
 from auxiliary import *
 
 
 from tkinter import filedialog  # this is a submodule that isn't loaded automatically
-
-
-def sterm_fld_pressed(event):
-    """Treats an event where the search term field was clicked on.
-
-    Initially, the function will delete all current contents of the sterm field.
-    For each additional click on the search term field, the function will select all current contents.
-
-    """
-
-    #global bool_sterm_fld_pressed   # we add this line because otherwise bool_sterm_fld_pressed is considered to be a
-                                    # local function variable rather than the symbol imported from the auxiliary module
-                                    # this was a bad idea since the symbol was just copied from auxiliary, the value
-                                    # of this variable isn't synched between the modules
-    g.sterm_fld.selection_range(0, tk.END)  # select all text
-    g.sterm_fld.icursor(tk.END) # move cursor after last character
-    if not g.bool_sterm_fld_pressed:    # if this is the first time the search term field is being pressed
-        g.sterm_fld.delete(0, 'end')    # remove current text from entry
-        g.sterm_fld.config(fg='green')
-        g.bool_sterm_fld_pressed = True
-        if g.chose_file_or_folder:
-            g.search_button['state'] = 'normal' # enable the search button
-    else:
-        g.sterm_fld.selection_range(0, tk.END)  # select all text
-        g.sterm_fld.icursor(tk.END)  # move cursor after last character
-    return 'break'  # this is to prevent class binding from overwriting the binding we created
-                    # since class binding happens after the widget binding
-                    # guess it is something like 'if widget_binding || class_binding || ..'
 
 
 def add_sterm_fld():
@@ -63,6 +41,22 @@ def add_sterm_fld():
     g.sterm_fld.config(fg='grey')
     g.sterm_fld.bind(g.EVT_FOCUS, sterm_fld_pressed)    # define what happens when field is clicked on
     g.sterm_fld.pack()
+    return g.SUCCESS
+
+
+def add_checkbox_btn():
+    """The user can make the search case-insensitive by checking this box."""
+    g.case_checkbox = tk.Checkbutton(g.top,
+                                     text='Make the search case insensitive',
+                                     variable=g.checkbox_variable)
+    if not g.case_checkbox:
+        log_and_exit(g.ERR_TK_MSG.format(failed_func='tk.Checkbutton',
+                                         module='fslookup',
+                                         func='add_checkbox_btn',
+                                         date_time=str(datetime.datetime.now())))
+        return g.FAILURE
+
+    g.case_checkbox.pack()
     return g.SUCCESS
 
 
@@ -117,6 +111,7 @@ def add_widgets():
     #   the condition is just to make sure that there were no failures while adding some widget
     #   if, say, the add_sterm_fld function failed, we don't want to run add_browse_btn
     if add_sterm_fld() and\
+    add_checkbox_btn() and\
     add_browse_btn() and\
     add_search_btn():
         return

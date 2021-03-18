@@ -23,6 +23,12 @@ from os.path import isfile, isdir, join, splitext
 
 import docx
 
+import re
+
+# from globals import checkbox_variable   # this is bad - the value of checkbox_variable will be loaded initially
+                                        # as this module is loading, and will not be synched with its value in globals
+import globals as g # instead, do this and reference g.checkbox_variable
+
 
 SUPPORTED_EXTENSIONS = ['.txt', '.docx']
 
@@ -31,7 +37,9 @@ SUPPORTED_EXTENSIONS = ['.txt', '.docx']
 Returns True if file contains <sterm>, false otherwise."""
 def open_search_txt(path, sterm):
     with open(path) as reader:
-        if sterm in reader.read():
+        data = reader.read()
+        if (sterm in data)\
+                or (g.checkbox_variable.get() and re.search(sterm, data, re.IGNORECASE)): # search is case insensitive
             return True
     return False
 
@@ -41,7 +49,8 @@ def open_search_txt(path, sterm):
 def open_search_docx(path, sterm):
     doc = docx.Document(path)
     for para in doc.paragraphs:
-        if sterm in para.text:
+        if (sterm in para.text)\
+                or (g.checkbox_variable.get() and re.search(sterm, para.text, re.IGNORECASE)): # search is case insensitive
             return True
     return False
 

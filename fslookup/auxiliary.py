@@ -3,6 +3,7 @@ Auxiliary functions to be used by widgets in fslookup.py.
 
 
 Functions:
+    sterm_fld_pressed()
     clear_current_output()
     search()
     browse_file_dialog()
@@ -20,6 +21,34 @@ from globals import tk
 from rec_search import rec_search
 
 import os, datetime
+
+
+def sterm_fld_pressed(event):
+    """Treats an event where the search term field was clicked on.
+
+    Initially, the function will delete all current contents of the sterm field.
+    For each additional click on the search term field, the function will select all current contents.
+
+    """
+
+    #global bool_sterm_fld_pressed   # we add this line because otherwise bool_sterm_fld_pressed is considered to be a
+                                    # local function variable rather than the symbol imported from the auxiliary module
+                                    # this was a bad idea since the symbol was just copied from auxiliary, the value
+                                    # of this variable isn't synched between the modules
+    g.sterm_fld.selection_range(0, tk.END)  # select all text
+    g.sterm_fld.icursor(tk.END) # move cursor after last character
+    if not g.bool_sterm_fld_pressed:    # if this is the first time the search term field is being pressed
+        g.sterm_fld.delete(0, 'end')    # remove current text from entry
+        g.sterm_fld.config(fg='green')
+        g.bool_sterm_fld_pressed = True
+        if g.chose_file_or_folder:
+            g.search_button['state'] = 'normal' # enable the search button
+    else:
+        g.sterm_fld.selection_range(0, tk.END)  # select all text
+        g.sterm_fld.icursor(tk.END)  # move cursor after last character
+    return 'break'  # this is to prevent class binding from overwriting the binding we created
+                    # since class binding happens after the widget binding
+                    # guess it is something like 'if widget_binding || class_binding || ..'
 
 
 def clear_current_output():

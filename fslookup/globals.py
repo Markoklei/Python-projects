@@ -11,6 +11,7 @@ Globals:
     top
 
     sterm_fld
+    case_checkbox
     browse_label
     browse_folder_button
     browse_file_button
@@ -27,9 +28,8 @@ Globals:
     bool_sterm_fld_pressed
     chose_file_or_folder
     curr_labels
+    checkbox_variable
 """
-
-#   TODO: change documentation of functions and module to follow python conventions
 
 import tkinter as tk
 
@@ -45,6 +45,7 @@ def init_gui():
     top = tk.Tk()
     top.title('FSLookup')
     top.geometry("500x500")
+    top.iconbitmap("search_icon.ico")
 
 
 init_gui()  # top is now initialized and can be used by other modules
@@ -53,6 +54,7 @@ init_gui()  # top is now initialized and can be used by other modules
 # -- widgets --
 
 sterm_fld = None
+case_checkbox = None
 browse_label = None
 browse_folder_button = None
 browse_file_button = None
@@ -78,3 +80,4 @@ EVT_FOCUS = '<FocusIn>' # applies for left button click on mouse
 bool_sterm_fld_pressed = False
 chose_file_or_folder = False
 curr_labels = []
+checkbox_variable = tk.IntVar()
